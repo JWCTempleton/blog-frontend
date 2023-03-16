@@ -15,6 +15,14 @@ function App() {
   return (
     <div className="App">
       <h1>Blogs</h1>
+      {allBlogs.map((blog) => {
+        return (
+          <div key={blog.title} style={{ margin: "3rem" }}>
+            <p>{blog.title}</p>
+            <p>{blog.author}</p>
+          </div>
+        );
+      })}
     </div>
   );
 }
