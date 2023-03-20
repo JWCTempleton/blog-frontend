@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 function App() {
   const [allBlogs, setAllBlogs] = useState([]);
   const [newTitle, setNewTitle] = useState("");
+  const [newAuthor, setNewAuthor] = useState("");
   const [newUrl, setNewUrl] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -20,11 +21,26 @@ function App() {
 
   const addBlog = (event) => {
     event.preventDefault();
-    console.log(newTitle, newUrl);
+    const blogObject = {
+      title: newTitle,
+      author: newAuthor,
+      url: newUrl,
+    };
+
+    blogService.create(blogObject).then((response) => {
+      setAllBlogs(allBlogs.concat(response));
+      setNewAuthor("");
+      setNewTitle("");
+      setNewUrl("");
+    });
   };
 
   const handleTitleChange = (event) => {
     setNewTitle(event.target.value);
+  };
+
+  const handleAuthorChange = (event) => {
+    setNewAuthor(event.target.value);
   };
 
   const handleUrlChange = (event) => {
@@ -64,6 +80,10 @@ function App() {
       <div>
         Title:{" "}
         <input type="text" value={newTitle} onChange={handleTitleChange} />
+      </div>
+      <div>
+        Author:{" "}
+        <input type="text" value={newAuthor} onChange={handleAuthorChange} />
       </div>
       <div>
         URL: <input value={newUrl} onChange={handleUrlChange} />
