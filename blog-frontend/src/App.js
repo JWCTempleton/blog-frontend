@@ -1,6 +1,7 @@
 import "./App.css";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
+import Notification from "./components/Notification";
 
 import { useEffect, useState } from "react";
 
@@ -63,11 +64,10 @@ function App() {
       setUsername("");
       setPassword("");
     } catch (exception) {
-      // setErrorMessage("Wrong credentials");
-      // setTimeout(() => {
-      //   setErrorMessage(null);
-      // }, 5000);
-      console.log("error", exception);
+      setErrorMessage("Wrong credentials");
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 5000);
     }
   };
 
@@ -122,6 +122,7 @@ function App() {
   return (
     <div className="App">
       <h1>Blogs</h1>
+      <Notification message={errorMessage} />
       {!user && loginForm()}
       {user && (
         <div>
