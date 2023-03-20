@@ -2,15 +2,16 @@ import "./App.css";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 import Notification from "./components/Notification";
+import BlogForm from "./components/BlogForm";
 
 import { useEffect, useState } from "react";
 
 function App() {
   const [allBlogs, setAllBlogs] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [newTitle, setNewTitle] = useState("");
-  const [newAuthor, setNewAuthor] = useState("");
-  const [newUrl, setNewUrl] = useState("");
+  // const [newTitle, setNewTitle] = useState("");
+  // const [newAuthor, setNewAuthor] = useState("");
+  // const [newUrl, setNewUrl] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
@@ -30,33 +31,23 @@ function App() {
     }
   }, []);
 
-  const addBlog = (event) => {
-    event.preventDefault();
-    const blogObject = {
-      title: newTitle,
-      author: newAuthor,
-      url: newUrl,
-    };
-
-    blogService.create(blogObject).then((response) => {
-      setAllBlogs(allBlogs.concat(response));
-      setNewAuthor("");
-      setNewTitle("");
-      setNewUrl("");
+  const addBlog = (blogObject) => {
+    blogService.create(blogObject).then((returnedBlog) => {
+      setAllBlogs(allBlogs.concat(returnedBlog));
     });
   };
 
-  const handleTitleChange = (event) => {
-    setNewTitle(event.target.value);
-  };
+  // const handleTitleChange = (event) => {
+  //   setNewTitle(event.target.value);
+  // };
 
-  const handleAuthorChange = (event) => {
-    setNewAuthor(event.target.value);
-  };
+  // const handleAuthorChange = (event) => {
+  //   setNewAuthor(event.target.value);
+  // };
 
-  const handleUrlChange = (event) => {
-    setNewUrl(event.target.value);
-  };
+  // const handleUrlChange = (event) => {
+  //   setNewUrl(event.target.value);
+  // };
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -85,24 +76,24 @@ function App() {
     window.localStorage.removeItem("loggedNoteappUser");
   };
 
-  const blogForm = () => (
-    <form onSubmit={addBlog}>
-      <div>
-        Title:{" "}
-        <input type="text" value={newTitle} onChange={handleTitleChange} />
-      </div>
-      <div>
-        Author:{" "}
-        <input type="text" value={newAuthor} onChange={handleAuthorChange} />
-      </div>
-      <div>
-        URL: <input value={newUrl} onChange={handleUrlChange} />
-      </div>
-      <div>
-        <button type="submit">add</button>
-      </div>
-    </form>
-  );
+  // const blogForm = () => (
+  //   <form onSubmit={addBlog}>
+  //     <div>
+  //       Title:{" "}
+  //       <input type="text" value={newTitle} onChange={handleTitleChange} />
+  //     </div>
+  //     <div>
+  //       Author:{" "}
+  //       <input type="text" value={newAuthor} onChange={handleAuthorChange} />
+  //     </div>
+  //     <div>
+  //       URL: <input value={newUrl} onChange={handleUrlChange} />
+  //     </div>
+  //     <div>
+  //       <button type="submit">add</button>
+  //     </div>
+  //   </form>
+  // );
 
   const loginForm = () => (
     <form onSubmit={handleLogin}>
@@ -137,7 +128,7 @@ function App() {
         <div>
           <p>{user.name} logged in</p>
           <button onClick={handleLogout}>Logout</button>
-          {blogForm()}
+          <BlogForm createBlog={addBlog} />
         </div>
       )}{" "}
       {allBlogs.map((blog) => {
