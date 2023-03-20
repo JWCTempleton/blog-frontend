@@ -3,15 +3,13 @@ import blogService from "./services/blogs";
 import loginService from "./services/login";
 import Notification from "./components/Notification";
 import BlogForm from "./components/BlogForm";
+import Toggleable from "./components/Toggleable";
 
 import { useEffect, useState } from "react";
 
 function App() {
   const [allBlogs, setAllBlogs] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
-  // const [newTitle, setNewTitle] = useState("");
-  // const [newAuthor, setNewAuthor] = useState("");
-  // const [newUrl, setNewUrl] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
@@ -36,18 +34,6 @@ function App() {
       setAllBlogs(allBlogs.concat(returnedBlog));
     });
   };
-
-  // const handleTitleChange = (event) => {
-  //   setNewTitle(event.target.value);
-  // };
-
-  // const handleAuthorChange = (event) => {
-  //   setNewAuthor(event.target.value);
-  // };
-
-  // const handleUrlChange = (event) => {
-  //   setNewUrl(event.target.value);
-  // };
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -75,25 +61,6 @@ function App() {
     setUser(null);
     window.localStorage.removeItem("loggedNoteappUser");
   };
-
-  // const blogForm = () => (
-  //   <form onSubmit={addBlog}>
-  //     <div>
-  //       Title:{" "}
-  //       <input type="text" value={newTitle} onChange={handleTitleChange} />
-  //     </div>
-  //     <div>
-  //       Author:{" "}
-  //       <input type="text" value={newAuthor} onChange={handleAuthorChange} />
-  //     </div>
-  //     <div>
-  //       URL: <input value={newUrl} onChange={handleUrlChange} />
-  //     </div>
-  //     <div>
-  //       <button type="submit">add</button>
-  //     </div>
-  //   </form>
-  // );
 
   const loginForm = () => (
     <form onSubmit={handleLogin}>
@@ -128,7 +95,9 @@ function App() {
         <div>
           <p>{user.name} logged in</p>
           <button onClick={handleLogout}>Logout</button>
-          <BlogForm createBlog={addBlog} />
+          <Toggleable buttonLabel={"New Blog"}>
+            <BlogForm createBlog={addBlog} />
+          </Toggleable>
         </div>
       )}{" "}
       {allBlogs.map((blog) => {
