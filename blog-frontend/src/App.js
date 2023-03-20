@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [allBlogs, setAllBlogs] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [newTitle, setNewTitle] = useState("");
   const [newAuthor, setNewAuthor] = useState("");
   const [newUrl, setNewUrl] = useState("");
