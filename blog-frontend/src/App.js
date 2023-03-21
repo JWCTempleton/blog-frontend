@@ -63,6 +63,29 @@ function App() {
     window.localStorage.removeItem("loggedNoteappUser");
   };
 
+  const handleLikes = (id) => {
+    const blog = allBlogs.find((blog) => blog.id === id);
+    const changedBlog = { ...blog, likes: blog.likes + 1 };
+
+    blogService
+      .update(id, changedBlog)
+      .then((response) => {
+        console.log("response", response);
+
+        setAllBlogs(
+          allBlogs.map((blog) =>
+            blog.id !== id ? blog : { ...response, user: changedBlog.user }
+          )
+        );
+      })
+      .catch((error) => {
+        setErrorMessage(`Blog '${blog.title}' was already removed from server`);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
+      });
+  };
+
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <div>
@@ -102,7 +125,13 @@ function App() {
         </div>
       )}{" "}
       {allBlogs.map((blog) => {
-        return <BlogCard key={blog.id} blog={blog} />;
+        return (
+          <BlogCard
+            key={blog.id}
+            blog={blog}
+            handleLikes={() => handleLikes(blog.id)}
+          />
+        );
       })}
     </div>
   );
