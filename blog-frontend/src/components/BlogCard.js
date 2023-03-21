@@ -24,6 +24,7 @@ const BlogCard = ({ blog }) => {
             <a href={blog.url}>{blog.url}</a>
           </p>
           <p>{blog.likes}</p>
+          <p>Created by: {blog.user.name}</p>
         </div>
       );
     } else if (cardOpen === false) {
