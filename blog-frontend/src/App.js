@@ -3,6 +3,7 @@ import blogService from "./services/blogs";
 import loginService from "./services/login";
 import Notification from "./components/Notification";
 import BlogForm from "./components/BlogForm";
+import BlogCard from "./components/BlogCard";
 import Toggleable from "./components/Toggleable";
 
 import { useEffect, useState } from "react";
@@ -101,12 +102,7 @@ function App() {
         </div>
       )}{" "}
       {allBlogs.map((blog) => {
-        return (
-          <div key={blog.title} style={{ margin: "3rem" }}>
-            <p>{blog.title}</p>
-            <p>{blog.author}</p>
-          </div>
-        );
+        return <BlogCard key={blog.id} blog={blog} />;
       })}
     </div>
   );
