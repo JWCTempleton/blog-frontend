@@ -130,6 +130,7 @@ function App() {
             key={blog.id}
             blog={blog}
             handleLikes={() => handleLikes(blog.id)}
+            user={user}
           />
         );
       })}

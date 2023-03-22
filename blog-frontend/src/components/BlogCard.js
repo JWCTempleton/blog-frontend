@@ -8,7 +8,7 @@ const styles = {
   width: "16rem",
 };
 
-const BlogCard = ({ blog, handleLikes }) => {
+const BlogCard = ({ blog, handleLikes, user }) => {
   const [cardOpen, setCardOpen] = useState(false);
 
   const displayCard = () => {
@@ -25,6 +25,7 @@ const BlogCard = ({ blog, handleLikes }) => {
           </p>
           <p>{blog.likes}</p>
           <p>Created by: {blog.user.name}</p>
+          {user && user.username === blog.user.username ? <p>Same User</p> : ""}
           <button onClick={handleLikes}>Like</button>
         </div>
       );
