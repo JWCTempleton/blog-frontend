@@ -63,6 +63,10 @@ function App() {
     window.localStorage.removeItem("loggedNoteappUser");
   };
 
+  const handleDelete = (id) => {
+    console.log("id", id);
+  };
+
   const handleLikes = (id) => {
     const blog = allBlogs.find((blog) => blog.id === id);
     const changedBlog = { ...blog, likes: blog.likes + 1 };
@@ -131,6 +135,7 @@ function App() {
             blog={blog}
             handleLikes={() => handleLikes(blog.id)}
             user={user}
+            handleDelete={() => handleDelete(blog.id)}
           />
         );
       })}
