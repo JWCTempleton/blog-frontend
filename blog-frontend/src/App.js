@@ -65,6 +65,11 @@ function App() {
 
   const handleDelete = (id) => {
     console.log("id", id);
+    const blog = allBlogs.find((blog) => blog.id === id);
+    if (window.confirm(`Do you want to delete the entry for ${blog.title}?`)) {
+      blogService.remove(blog.id);
+      setAllBlogs(allBlogs.filter((blog) => blog.id !== id));
+    }
   };
 
   const handleLikes = (id) => {
